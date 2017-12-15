@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 	var wrongImages = ["assets/images/wrong1.png","assets/images/wrong2.jpg","assets/images/wrong3.jpg"];
 
-	var rightImages = [];
+	var rightImages = ["assets/images/jane.gif"];
 
 	var i = 0;
 
@@ -22,7 +22,8 @@ $(document).ready(function() {
 	var losses = 0;
 
 	var wins = 0;
-	var timeGone = setTimeout(timeLost, 30000);
+	var timeGone;
+	var questionsRemain;
 	// var cycles = setInterval(nextQuestion, 20000);
 	// var clear = setInterval(reset,35000);
 
@@ -30,26 +31,41 @@ $(document).ready(function() {
 
 
 
-	nextQuestion();
+
 
 	function reset (){
 		$("#body").text("");
 		$("#heading").html("");
 	}
 
+	function restartGame(){
+		clearTimeout(questionsRemain);
+		i = 0; 
+		wins = 0; 
+		losses = 0; 
+		setTimeout(nextQuestion, 10000)	;
+	}
+
 	function timeLost() {
-		losses++;
-		i++; 
+		losses++; 
 		$("#heading").html("<h1>You're Out of Time!</h1>");
 		$("#body").append("<h1>The Correct Answer is: " + correctAnswers[i] + "</h1>");
 		$("#body").append("<img src=" + wrongImages[i] + ">");
-		setTimeout(nextQuestion, 10000);
+		i++;
+		questionsRemain = setTimeout(nextQuestion, 10000);
 		
 	};
 
 	function nextQuestion() {
-		 reset();
-		 timeGone = setTimeout(timeLost, 30000);
+		reset();
+		timeGone = setTimeout(timeLost, 30000);
+		if (i > questions.length - 1) {
+
+			$("#heading").html("<h1>You've Finished the Game!</h1>");
+			$("#body").append("<h2>Number of Correct Answers: " + wins + "</h2>");
+			$("#body").append("<h2>Number of Incorrect Answers: " + losses + "</h2>")
+			setTimeout(restartGame, 10000);
+		} 
 		$("#heading").html(questions[i]);
 		$("#answer1").html(answer1[i]);
 		$("#answer2").html(answer2[i]);
@@ -63,12 +79,11 @@ $(document).ready(function() {
 		console.log($("#answer2").attr("value"));
 		console.log($("#answer3").attr("value"));
 
-		// i++;
+
 		console.log([i]);
 
-	// 	 if (i == questions.length) {
- // 	clearInterval(cycles);
- // };
+
+
 	};
 
 	function pointAssigner() {
@@ -76,21 +91,21 @@ $(document).ready(function() {
 			
 			losses++;
 			$("#heading").html("<h1>Incorrect Answer!</h1>");
-			$("#body").append("<h1>The Correct Answer is" + correctAnswers[i] + "</h1>");
+			$("#body").append("<h1>The Correct Answer is: " + correctAnswers[i] + "</h1>");
 			$("#body").append("<img src=" + wrongImages[i] + ">");		
 			clearTimeout(timeGone);
 			i++;
-			setTimeout(nextQuestion, 10000);
+			questionsRemain = setTimeout(nextQuestion, 10000);
 			
 		
 		} else {
 			
 			wins++;
 			$("#heading").html("<h1>Correct Answer!!!</h1>");
-			// $("#body").prepend("<img src=" + rightImages[i] + ">");
+			$("#body").append("<img src=" + rightImages[i] + ">");
 			clearTimeout(timeGone);
 			i++;
-			setTimeout(nextQuestion,10000);
+			questionsRemain = setTimeout(nextQuestion,10000);
 			
 			
 	
@@ -98,7 +113,7 @@ $(document).ready(function() {
 	}
 
 
-
+nextQuestion();
 $(".option").on("click", pointAssigner);
 
 
