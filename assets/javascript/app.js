@@ -2,30 +2,34 @@ $(document).ready(function() {
 	var questions = [
 		"In the comic books, Jane Foster is a nurse. What's her profession in the Marvel Cinematic Universe?",
 		"What is the title of the second 'Avengers' movie?",
-		"Forged in the heart of a dying star, what is Thor's hammer's name?"
+		"Forged in the heart of a dying star, what is Thor's hammer's name?", "What power source fuels Tony Stark's Iron Man suit?", 
+		"What song does baby Groot dance to at the end of 'Guardians of the Galaxy'?",
+		"What kind of food does Tony Stark suggest the Avengers eat after saving New York in 'The Avengers'?",
+		"In which Marvel movie did Samuel L. Jackson first appear as Nick Fury?"
 	];
 
-	var answer1 = ["Medical Doctor", "Age of Infinity", "Mjolnir"];
+	var answer1 = ["Medical Doctor", "Age of Infinity", "Mjolnir", "Lithium Ion Battery", "Uptight By Stevie Wonder", "Burritos", "Iron Man"];
 
-	var answer2 = ["Physicist", "Civil War", "Fjordir"];
+	var answer2 = ["Physicist", "Civil War", "Fjordir", "Arc Reactor", "Wanna Be Startin' Something By Michael Jackson", "Shawarma", "Iron Man 2"];
 
-	var answer3 = ["Geologist", "Age of Ultron", "Anduril"];
+	var answer3 = ["Geologist", "Age of Ultron", "Anduril", "The Tesseract", "I Want You Back By The Jackson Five","Pizza","The Incredible Hulk" ];
 
-	var wrongImages = ["assets/images/wrong1.png","assets/images/wrong2.jpg","assets/images/wrong3.jpg"];
+	var wrongImages = ["assets/images/wrong1.png","assets/images/wrong2.jpg","assets/images/wrong3.jpg","assets/images/wrong1.png",
+	"assets/images/wrong2.jpg","assets/images/wrong3.jpg"];
 
-	var rightImages = ["assets/images/jane.gif"];
+	var rightImages = ["assets/images/jane.gif", "assets/images/ultron.gif", "assets/images/hammer.gif","assets/images/iron.gif",
+	"assets/images/baby.gif","assets/images/food.gif", "assets/images/nick.gif"];
 
 	var i = 0;
 
-	var correctAnswers = ["Physicist", "Age of Ultron", "Mjolnir"];
+	var correctAnswers = ["Physicist", "Age of Ultron", "Mjolnir", "Arc Reactor","I Want You Back By The Jackson Five", "Shawarma", "Iron Man" ];
 
 	var losses = 0;
 
 	var wins = 0;
 	var timeGone;
 	var questionsRemain;
-	// var cycles = setInterval(nextQuestion, 20000);
-	// var clear = setInterval(reset,35000);
+
 
 
 
@@ -117,7 +121,7 @@ nextQuestion();
 $(".option").on("click", pointAssigner);
 
 
-// Use booleans to stop things when you run out of questions
+
 
 
 
