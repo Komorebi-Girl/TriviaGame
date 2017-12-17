@@ -1,11 +1,11 @@
 $(document).ready(function() {
 	var questions = [
-		"In the comic books, Jane Foster is a nurse. What's her profession in the Marvel Cinematic Universe?",
-		"What is the title of the second 'Avengers' movie?",
-		"Forged in the heart of a dying star, what is Thor's hammer's name?", "What power source fuels Tony Stark's Iron Man suit?", 
-		"What song does baby Groot dance to at the end of 'Guardians of the Galaxy'?",
-		"What kind of food does Tony Stark suggest the Avengers eat after saving New York in 'The Avengers'?",
-		"In which Marvel movie did Samuel L. Jackson first appear as Nick Fury?"
+	"In the comic books, Jane Foster is a nurse. What's her profession in the Marvel Cinematic Universe?",
+	"What is the title of the second 'Avengers' movie?",
+	"Forged in the heart of a dying star, what is Thor's hammer's name?", "What power source fuels Tony Stark's Iron Man suit?", 
+	"What song does baby Groot dance to at the end of 'Guardians of the Galaxy'?",
+	"What kind of food does Tony Stark suggest the Avengers eat after saving New York in 'The Avengers'?",
+	"In which Marvel movie did Samuel L. Jackson first appear as Nick Fury?"
 	];
 
 	var answer1 = ["Medical Doctor", "Age of Infinity", "Mjolnir", "Lithium Ion Battery", "Uptight By Stevie Wonder", "Burritos", "Iron Man"];
@@ -25,16 +25,29 @@ $(document).ready(function() {
 	var correctAnswers = ["Physicist", "Age of Ultron", "Mjolnir", "Arc Reactor","I Want You Back By The Jackson Five", "Shawarma", "Iron Man" ];
 
 	var losses = 0;
-
-	var wins = 0;
+	var timer;
+	var wins = 0; 
 	var timeGone;
+	var timerDown; 
 	var questionsRemain;
 
 
 
+	function timerRunning(){
+		timer = 30; 
+		if (timer > 0) {
+			timerDown = setInterval(timerDecrement,1000);
+		} else {
+			clearInterval(timerDown);
+		}
 
+	}
 
+	function timerDecrement(){
+		$("#countdown").html(timer);
+		timer--;
 
+	}
 
 
 	function reset (){
@@ -51,6 +64,7 @@ $(document).ready(function() {
 	}
 
 	function timeLost() {
+		clearInterval(timerDown);
 		losses++; 
 		$("#heading").html("<h1>You're Out of Time!</h1>");
 		$("#body").append("<h1>The Correct Answer is: " + correctAnswers[i] + "</h1>");
@@ -62,6 +76,7 @@ $(document).ready(function() {
 
 	function nextQuestion() {
 		reset();
+		timerRunning();
 		timeGone = setTimeout(timeLost, 30000);
 		if (i > questions.length - 1) {
 
@@ -101,7 +116,7 @@ $(document).ready(function() {
 			i++;
 			questionsRemain = setTimeout(nextQuestion, 10000);
 			
-		
+
 		} else {
 			
 			wins++;
@@ -112,13 +127,15 @@ $(document).ready(function() {
 			questionsRemain = setTimeout(nextQuestion,10000);
 			
 			
-	
+
 		}
 	}
 
 
-nextQuestion();
-$(".option").on("click", pointAssigner);
+	nextQuestion();
+
+	$(".option").on("click", function(){clearInterval(timerDown)})
+	$(".option").on("click", pointAssigner);
 
 
 
